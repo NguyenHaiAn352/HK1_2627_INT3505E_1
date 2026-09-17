@@ -1,0 +1,84 @@
+6 Principles of REST architecture:
+- Client-Server: Separation of concerns: client handles UI, server handles data & logic
+- Statelessness: Each request contains all necessary info; server stores no client state.
+- Cacheability: Responses explicitly state if they can be cached.
+- Uniform Interface: Consistent way to interact with resources (URIs, HTTP methods, HATEOAS).
+- Layered System: Clients don’t need to know if they’re talking to the server or intermediaries.
+- Code-on-Demand: Servers can send executable code (e.g., JavaScript) to clients.
+
+HTTP Methods:
+- GET: Retrieve data from the server (read-only)
+- POST: Submit data to the server to create a new resource
+- PUT: Update or replace existing resource with new data
+- PATCH: Partially update an existing resource's specific fields
+- DELETE: Remove a resource from the server
+- HEAD: Retrieve metadata (headers) about a resource, without the body
+- OPTIONS: Discover supported methods for a resource'
+
+HTTP Status Codes:
+200 OK – Request succeeded; response contains the requested data.
+
+201 Created – Resource successfully created (often after a POST).
+
+202 Accepted – Request accepted but not yet processed (asynchronous operations).
+
+204 No Content – Request succeeded, but no body is returned (common with DELETE).
+
+301 Moved Permanently – Resource has a new permanent URI.
+
+302 Found – Temporary redirect to another URI.
+
+304 Not Modified – Cached version is still valid; no need to re-download.
+
+400 Bad Request – Malformed request (syntax or validation error).
+
+401 Unauthorized – Authentication required or failed.
+
+403 Forbidden – Authenticated but not allowed to access resource.
+
+404 Not Found – Resource doesn’t exist.
+
+405 Method Not Allowed – HTTP method not supported for this resource.
+
+409 Conflict – Request conflicts with current state (e.g., duplicate data).
+
+429 Too Many Requests – Rate limit exceeded.
+
+500 Internal Server Error – Generic server-side failure.
+
+502 Bad Gateway – Invalid response from upstream server.
+
+503 Service Unavailable – Server temporarily overloaded or down.
+
+504 Gateway Timeout – Upstream server didn’t respond in time.
+
+
+HTTP Headers:
+
+Request Headers
+Host – Specifies the domain name of the server (e.g., Host: api.example.com).
+
+Authorization – Carries credentials (e.g., Bearer <token> for OAuth).
+
+Content-Type – Indicates the format of the request body (e.g., application/json).
+
+Accept – Tells the server what response formats the client can handle (e.g., Accept: application/xml).
+
+User-Agent – Identifies the client software making the request (browser, app, etc.).
+
+Cookie – Sends stored cookies to the server for session management.
+
+Response Headers
+Content-Type – Format of the response body (e.g., application/json).
+
+Content-Length – Size of the response body in bytes.
+
+Cache-Control – Directives for caching (e.g., no-cache, max-age=3600).
+
+ETag – Unique identifier for a resource version, used for caching and validation.
+
+Set-Cookie – Sends cookies from server to client for session tracking.
+
+Location – Used in redirects or after resource creation (e.g., 201 Created → Location: /users/123).
+
+Access-Control-Allow-Origin – Defines which domains can access the resource (CORS policy).
