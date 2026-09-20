@@ -5,10 +5,6 @@ app = Flask(__name__)
 
 DEFAULT_SIZE = 20
 MAX_SIZE = 100
-books_list = []
-
-con = sqlite3.connect("books.db")
-cur = con.cursor()
 
 def fetch_books():
     con = sqlite3.connect("books.db")
