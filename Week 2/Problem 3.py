@@ -64,7 +64,7 @@ def book_get():
 def book_tag(id):
     books_list = fetch_books()
     book = books_list[id]
-    etag = hashlib.md5(book["name"].encode()).hexdigest()
+    etag = hashlib.sha256(book.keys().encode()).hexdigest()
 
     if request.headers.get("If-None-Match") == etag:
         return make_response("Unchanged"), 304
