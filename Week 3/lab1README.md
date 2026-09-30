@@ -1,10 +1,10 @@
 1. Xác định các resources trong miền:
 
-- 'posts': /users/posts?user_id=[id]
-- 'comments': /users/posts/comments?post_id=[pid]
-- 'tags': /users/posts/tags?post_id=[pid]
-- 'profile': /users/profile?user_id=[id]
-- 'follow': /users/followings?user_id=[id]
+- 'posts': /users/[id]/posts
+- 'comments': /users/[id]/posts/comments?post_id=[pid]
+- 'tags': /users/[id]/posts/tags?post_id=[pid]
+- 'profile': /users/[id]/profile
+- 'follow': /users/[id]/followings
 
 2. Phân loại collection/item/sub-resource
 
