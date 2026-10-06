@@ -56,15 +56,23 @@ def client_exception_handler(e):
 
 @app.get("/users/<int:id>")
 def get_user(id):
-   user = User.query.get(id)
-   if not user:
+   try:
+      user = User.query.get(id)
+      if not user:
+         raise APIProblem(
+            type="user-not-found",
+            title="User not found.",
+            status=404,
+            instance="/users/" + str(id)
+         )
+      return jsonify(user.to_dict())
+   except Exception as e:
       raise APIProblem(
-         type="user-not-found",
-         title="User not found.",
-         status=404,
-         instance="/users/" + str(id),
+         type="internal-server-error",
+         title="Internal Server Error",
+         status=500,
+         instance="/users/" + str(id)
       )
-   return jsonify(user.to_dict())
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, debug=True)
