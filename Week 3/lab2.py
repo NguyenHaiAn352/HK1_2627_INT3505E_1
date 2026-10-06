@@ -71,6 +71,7 @@ def get_user(id):
          type="internal-server-error",
          title="Internal Server Error",
          status=500,
+         detail=str(e),
          instance="/users/" + str(id)
       )
 
