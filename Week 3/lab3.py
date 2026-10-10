@@ -96,10 +96,7 @@ def get_order():
       data = {field: getattr(order, field) for field in items if hasattr(order, field)}
     results.append(data)
 
-  # results = [{"id": order.id, "status": order.status} for order in orders]
-
   next_cursor = results[-1]["id"] if results else None
-  # dict_result = [{"id": order.id, "status": order.status} for order in results]
 
   response = make_response(jsonify({"orders": results, "next_cursor": next_cursor}))
   return response

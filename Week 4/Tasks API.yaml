@@ -1,0 +1,402 @@
+openapi: 3.0.0
+info:
+  title: Tasks API
+  description: This is a mockup project meant to recreate how an API specification would look like in real life settings.
+  contact:
+    email: 24021352@vnu.edu.vn
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/none-6dd-3eb/W4L1/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://127.0.0.1:5000/v1
+  description: Local API server
+tags:
+- name: admins
+  description: Secured Admin-only calls.
+- name: developers
+  description: Operations available to regular developers.
+- name: tasks
+  description: Operations that manipulate tasks.
+paths:
+  /tasks:
+    get:
+      tags:
+      - tasks
+      summary: List all tasks
+      operationId: listTasks
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of tasks to return
+        required: false
+        schema:
+          type: integer
+      - name: status
+        in: query
+        description: Filter tasks by status
+        required: false
+        schema:
+          type: string
+          enum:
+          - open
+          - done
+      responses:
+        "200":
+          description: query successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+              example:
+              - id: 123e4567-e89b-12d3-a456-426614174000
+                title: Prepare project report
+                status: open
+                priority: high
+                dueDate: 2026-09-15
+        "401":
+          description: unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/auth
+                title: Unauthorized
+                status: 401
+                detail: Missing or invalid authentication token
+                traceId: abc123
+    post:
+      tags:
+      - tasks
+      - developers
+      - admins
+      summary: Add a new task
+      operationId: createTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskInput"
+            example:
+              title: Họp nhóm API team
+              dueDate: 2026-09-15
+              priority: high
+        required: true
+      responses:
+        "201":
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+              example:
+                id: 123e4567-e89b-12d3-a456-426614174001
+                title: Họp nhóm API team
+                status: open
+                priority: high
+                dueDate: 2026-09-15
+        "400":
+          description: bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/bad-request
+                title: Bad Request
+                status: 400
+                detail: Invalid JSON payload
+                traceId: def456
+        "422":
+          description: validation failed
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/validation
+                title: Validation Error
+                status: 422
+                detail: Title must not be empty
+                traceId: ghi789
+      security:
+      - bearerAuth: []
+  /tasks/{taskId}:
+    get:
+      tags:
+      - tasks
+      summary: Retrieve a specific task
+      operationId: getTask
+      parameters:
+      - name: taskId
+        in: path
+        description: Unique identifier of the task
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+              example:
+                id: 123e4567-e89b-12d3-a456-426614174000
+                title: Prepare project report
+                status: open
+                priority: high
+                dueDate: 2026-09-15
+        "401":
+          description: unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/auth
+                title: Unauthorized
+                status: 401
+                detail: Missing or invalid authentication token
+                traceId: xyz123
+        "404":
+          description: does not exist
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/not-found
+                title: Not Found
+                status: 404
+                detail: Task with ID 123e4567-e89b-12d3-a456-426614174000 not found
+                traceId: uvw456
+    delete:
+      tags:
+      - tasks
+      - developers
+      - admins
+      summary: Delete a task
+      operationId: deleteTask
+      parameters:
+      - name: taskId
+        in: path
+        description: Unique identifier of the task
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "204":
+          description: deleted successfully (no content)
+        "404":
+          description: does not exist
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/not-found
+                title: Not Found
+                status: 404
+                detail: Task with ID 123e4567-e89b-12d3-a456-426614174000 not found
+                traceId: rst789
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - tasks
+      - developers
+      - admins
+      summary: Update fields of a task.
+      operationId: patchTask
+      parameters:
+      - name: taskId
+        in: path
+        description: Unique identifier of the task
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskInput"
+            example:
+              title: Prepare project report
+              status: open
+              priority: high
+              dueDate: 2026-09-15
+        required: true
+      responses:
+        "200":
+          description: updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+              example:
+                id: 123e4567-e89b-12d3-a456-426614174000
+                title: Prepare project report
+                status: done
+                priority: high
+                dueDate: 2026-09-15
+        "400":
+          description: bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/bad-request
+                title: Bad Request
+                status: 400
+                detail: Invalid field value
+                traceId: lmn123
+        "401":
+          description: unauthorized
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/auth
+                title: Unauthorized
+                status: 401
+                detail: Missing or invalid authentication token
+                traceId: opq456
+        "404":
+          description: does not exist
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: https://example.com/probs/not-found
+                title: Not Found
+                status: 404
+                detail: Task with ID 123e4567-e89b-12d3-a456-426614174000 not found
+                traceId: rst404
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    Task:
+      required:
+      - id
+      - title
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          minLength: 1
+          type: string
+        status:
+          type: string
+          enum:
+          - open
+          - done
+        priority:
+          type: string
+          enum:
+          - low
+          - normal
+          - high
+        dueDate:
+          type: string
+          format: date
+    Error:
+      required:
+      - status
+      - title
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        traceId:
+          type: string
+    CreateTaskInput:
+      required:
+      - id
+      - title
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          minLength: 1
+          type: string
+        status:
+          type: string
+          enum:
+          - open
+          - done
+        priority:
+          type: string
+          enum:
+          - low
+          - normal
+          - high
+        dueDate:
+          type: string
+          format: date
+    UpdateTaskInput:
+      type: object
+      properties:
+        title:
+          minLength: 1
+          type: string
+        status:
+          type: string
+          enum:
+          - open
+          - done
+        priority:
+          type: string
+          enum:
+          - low
+          - normal
+          - high
+        dueDate:
+          type: string
+          format: date
+  parameters:
+    PageLimit:
+      name: limit
+      in: query
+      description: Maximum number of tasks to return
+      required: false
+      schema:
+        type: integer
+    StatusFilter:
+      name: status
+      in: query
+      description: Filter tasks by status
+      required: false
+      schema:
+        type: string
+        enum:
+        - open
+        - done
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
