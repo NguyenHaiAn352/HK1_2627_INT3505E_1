@@ -8,4 +8,16 @@ queryParams:
     disabled: false
     description: |
       Sort the query descendingly if '-' is at the start of key.
-order: 4000
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Books are sorted by id descending\", function () {\r
+
+      \    const data = pm.response.json();\r
+
+      \    const ids = data.map(b => b.id);\r
+
+      \    pm.expect(ids).to.eql([...ids].sort((a, b) => b - a));\r
+
+      });\r\n"
+    language: text/javascript
+order: 6000

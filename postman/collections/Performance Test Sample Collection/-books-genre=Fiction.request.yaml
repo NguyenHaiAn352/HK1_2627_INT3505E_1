@@ -7,4 +7,15 @@ queryParams:
     value: Fiction
     disabled: false
     description: Get books that are of 'Fiction genre.
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"All books belong to Fiction category\", function () {\r
+
+      \    const data = pm.response.json();\r
+
+      \    data.forEach(b =>
+      pm.expect(b.category.name).to.include(\"Fiction\"));\r
+
+      });\r\n"
+    language: text/javascript
 order: 3000

@@ -1,0 +1,32 @@
+$kind: http-request
+name: /books?sort=price&sort=id
+url: http://127.0.0.1:5000/books?sort=price&sort=id
+method: GET
+queryParams:
+  - key: sort
+    value: price
+    disabled: false
+    description: ""
+  - key: sort
+    value: id
+    disabled: false
+    description: ""
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Books are sorted by price ascending, then id ascending", function () {
+          const data = pm.response.json();
+          for (let i = 0; i < data.length - 1; i++) {
+              const current = data[i];
+              const next = data[i + 1];
+              if (current.price < next.price) {
+                  continue;
+              } else if (current.price === next.price) {
+                  pm.expect(current.id, `Book at index ${i} has higher ID than next for same price`).to.be.lessThan(next.id);
+              } else {
+                  pm.expect.fail(`Book at index ${i} has higher price than next`);
+              }
+          }
+      });
+    language: text/javascript
+order: 4241

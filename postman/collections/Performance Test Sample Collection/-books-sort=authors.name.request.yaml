@@ -3,8 +3,17 @@ name: /books?sort=authors.name
 url: http://127.0.0.1:5000/books?sort=authors.name
 method: GET
 queryParams:
-  - key: sort
-    value: authors.name
-    disabled: false
-    description: ""
-order: 5000
+  sort: authors.name
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Books are sorted by first author name ascending\", function () {\r
+
+      \    const data = pm.response.json();\r
+
+      \    const names = data.map(b => b.authors[0]?.name || \"\");\r
+
+      \    pm.expect(names).to.eql([...names].sort());\r
+
+      });"
+    language: text/javascript
+order: 7000

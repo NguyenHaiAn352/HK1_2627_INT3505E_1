@@ -31,14 +31,14 @@ def initialize_database():
         # Books — diverse prices, categories, and authors
         books = [
             Book(title="1984", price=9.99, category=fiction, authors=[author1]),
-            Book(title="Animal Farm", price=7.99, category=fiction, authors=[author1]),
+            Book(title="Animal Farm", price=9.99, category=fiction, authors=[author1]),
             Book(title="Principia Mathematica", price=19.99, category=science, authors=[author2]),
             Book(title="Pride and Prejudice", price=12.50, category=fiction, authors=[author3]),
             Book(title="Emma", price=10.00, category=fiction, authors=[author3]),
             Book(title="Harry Potter and the Sorcerer's Stone", price=15.99, category=fantasy, authors=[author4]),
             Book(title="Harry Potter and the Chamber of Secrets", price=16.99, category=fantasy, authors=[author4]),
             Book(title="Sapiens: A Brief History of Humankind", price=18.50, category=history, authors=[author5]),
-            Book(title="Homo Deus: A Brief History of Tomorrow", price=20.00, category=history, authors=[author5]),
+            Book(title="Homo Deus: A Brief History of Tomorrow", price=10.00, category=history, authors=[author5]),
             Book(title="Opticks", price=14.75, category=science, authors=[author2]),
         ]
         db.session.add_all(books)

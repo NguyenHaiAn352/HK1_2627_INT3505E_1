@@ -7,4 +7,14 @@ queryParams:
     value: "5"
     disabled: false
     description: Limit the query results to five books.
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Returns up to 5 books\", function () {\r
+
+      \    const data = pm.response.json();\r
+
+      \    pm.expect(data.length).to.be.at.most(5);\r
+
+      });\r\n"
+    language: text/javascript
 order: 2000

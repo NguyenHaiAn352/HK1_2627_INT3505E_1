@@ -4,4 +4,17 @@ url: http://127.0.0.1:5000/books?sort=authors.id
 method: GET
 queryParams:
   sort: authors.id
-order: 6000
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Books are sorted by first author id ascending\", function ()
+      {\r
+
+      \    const data = pm.response.json();\r
+
+      \    const ids = data.map(b => b.authors[0]?.id || 0);\r
+
+      \    pm.expect(ids).to.eql([...ids].sort((a, b) => a - b));\r
+
+      });"
+    language: text/javascript
+order: 8000

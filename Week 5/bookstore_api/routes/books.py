@@ -21,6 +21,7 @@ def listBooks(arguments, query):
         strategy = arguments.get("strategy", "offset")
         limit = int(arguments.get("limit", 10))
         sort_keys = arguments.getlist("sort") or ["id"]
+        # sort_keys.reverse()
     
         query = Book.query
     
@@ -53,11 +54,12 @@ def listBooks(arguments, query):
             book = query
     
         result = [book.to_dict() for book in books]
-        if strategy == "cursor" and books:
-            next_cursor = books[-1].id
-            return jsonify({"data": result, "next_cursor": next_cursor})
-
         response = make_response(jsonify(result))
+        if strategy == "cursor" and books:
+            next_cursor = books[-1].id + 1
+            response.headers['next-cursor'] = next_cursor
+            # return jsonify({"data": result, "next_cursor": next_cursor})
+
         response.headers["Content-Type"] = "application/json"
         response.headers["status-code"] = 200
         return response

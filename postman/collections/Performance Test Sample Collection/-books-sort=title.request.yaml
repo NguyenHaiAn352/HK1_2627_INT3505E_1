@@ -3,8 +3,17 @@ name: /books?sort=title
 url: http://127.0.0.1:5000/books?sort=title
 method: GET
 queryParams:
-  - key: sort
-    value: title
-    disabled: false
-    description: ""
-order: 3460
+  sort: title
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Books are sorted by title ascending\", function () {\r
+
+      \    const data = pm.response.json();\r
+
+      \    const titles = data.map(b => b.title);\r
+
+      \    pm.expect(titles).to.eql([...titles].sort());\r
+
+      });\r\n"
+    language: text/javascript
+order: 5000

@@ -1,1 +1,35 @@
 $kind: collection
+scripts:
+  - type: http:afterResponse
+    code: "// Base conditions that all endpoints must meet\r
+
+      \r
+
+      pm.test(\"Status code is 200\", function () {\r
+
+      \    pm.response.to.have.status(200);\r
+
+      });\r
+
+      \r
+
+      pm.test(\"Response has expected keys\", function () {\r
+
+      \    const jsonData = pm.response.json();\r
+
+      \    const requiredKeys = [\"id\", \"title\", \"price\", \"authors\", \"category\"];\r
+
+      \r
+
+      \    jsonData.forEach(book => {\r
+
+      \        requiredKeys.forEach(key => {\r
+
+      \        pm.expect(book).to.have.property(key);\r
+
+      \        });\r
+
+      \    });\r
+
+      });"
+    language: text/javascript
