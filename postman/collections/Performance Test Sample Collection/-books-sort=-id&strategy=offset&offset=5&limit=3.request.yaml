@@ -1,0 +1,22 @@
+$kind: http-request
+name: /books?sort=-id&strategy=offset&offset=5&limit=3
+url: http://127.0.0.1:5000/books?sort=-id&strategy=offset&offset=5&limit=3
+method: GET
+queryParams:
+  - key: sort
+    value: -id
+    disabled: false
+    description: ""
+  - key: strategy
+    value: offset
+    disabled: false
+    description: ""
+  - key: offset
+    value: "5"
+    disabled: false
+    description: ""
+  - key: limit
+    value: "3"
+    disabled: false
+    description: ""
+order: 8000

@@ -1,0 +1,10 @@
+$kind: http-request
+name: /books?sort=authors.name
+url: http://127.0.0.1:5000/books?sort=authors.name
+method: GET
+queryParams:
+  - key: sort
+    value: authors.name
+    disabled: false
+    description: ""
+order: 5000

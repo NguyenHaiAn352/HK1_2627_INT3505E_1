@@ -1,0 +1,10 @@
+$kind: http-request
+name: /books?sort=title
+url: http://127.0.0.1:5000/books?sort=title
+method: GET
+queryParams:
+  - key: sort
+    value: title
+    disabled: false
+    description: ""
+order: 3460

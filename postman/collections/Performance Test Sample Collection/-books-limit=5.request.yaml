@@ -1,0 +1,10 @@
+$kind: http-request
+name: /books?limit=5
+url: http://127.0.0.1:5000/books?limit=5
+method: GET
+queryParams:
+  - key: limit
+    value: "5"
+    disabled: false
+    description: Limit the query results to five books.
+order: 2000

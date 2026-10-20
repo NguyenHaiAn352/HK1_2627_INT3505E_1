@@ -1,0 +1,10 @@
+# Use this workspace to collaborate
+workspace:
+  id: a7502c42-4b86-4722-80ef-8580f965c547
+
+localResources:
+  specs:
+    - ../Week 4/Tasks API.yaml
+    - ../HK1_2627_INT3505E_1_Group_6/Week 4/bookmanaging.yaml
+    - ../HK1_2627_INT3505E_1_Group_6/Week 4/bookmanagingLITE.yaml
+    - ../HK1_2627_INT3505E_1_Group_6/Week 4/openapi_FULL.yaml

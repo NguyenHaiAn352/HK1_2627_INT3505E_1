@@ -1,0 +1,67 @@
+{
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": ""
+          },
+          "genre": {
+            "type": "string",
+            "minLength": 1,
+            "default": ""
+          },
+          "edition": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "price": {
+            "type": "number",
+            "minimum": 1,
+            "default": 1
+          }
+        }
+      },
+      "Users": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "default": ""
+          }
+        }
+      },
+
+      "Publishers": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "default": ""
+          }
+        }
+      }
+    }
+  }
+}

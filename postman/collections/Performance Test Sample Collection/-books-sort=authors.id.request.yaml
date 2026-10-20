@@ -1,0 +1,7 @@
+$kind: http-request
+name: /books?sort=authors.id
+url: http://127.0.0.1:5000/books?sort=authors.id
+method: GET
+queryParams:
+  sort: authors.id
+order: 6000

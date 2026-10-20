@@ -1,0 +1,10 @@
+$kind: http-request
+name: /books?genre=Fiction
+url: http://127.0.0.1:5000/books?genre=Fiction
+method: GET
+queryParams:
+  - key: genre
+    value: Fiction
+    disabled: false
+    description: Get books that are of 'Fiction genre.
+order: 3000
