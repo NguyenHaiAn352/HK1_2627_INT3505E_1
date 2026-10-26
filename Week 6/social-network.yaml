@@ -53,6 +53,12 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+        '429': 
+          description: Client sent too many requests
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /auth/refresh:
     post:
       tags:
@@ -86,6 +92,12 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+        '429': 
+          description: Client sent too many requests
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /posts/{id}:
     get:
       summary: returns a post by its Id
@@ -104,15 +116,39 @@ paths:
             minimum: 1
       responses:
         '200': 
-          description:
+          description: Retrieved the post successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Post'
-        '404':
-          description:
+        '400':
+          description: The post does not exist
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: The client does not have an access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: The client does not have the required scope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: The post does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429': 
+          description: Client sent too many requests
+          content:
+            application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
