@@ -2,8 +2,8 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import IntegrityError
 from ..extensions import db
 from ..models import Product
-from api.errors import Conflict
-from api.schemas import (
+from .errors import Conflict
+from .schemas import (
     ProductOut, ProductIn, ProductPatch, ReserveIn)
 
 products_bp = Blueprint(
@@ -89,29 +89,3 @@ def create_product_reserve():
         return jsonify({
             "message": "Products out of stock"
         }), 409
-    
-    # body = ReserveIn.load(request.json)
-
-    # p = db.get_or_404(Product, id)
-
-    # p_qty = 
-
-    # try {
-    #     setattr(p, 'qty_in_stock', body.get('qty'))
-    #     return jsonify({
-    #         "items": p
-    #     }), 200
-        
-    # } except {
-    #     return "Products out of stock", 409
-    # }
-
-    # body = ProductIn().load(request.json)
-    # p = Product(**body)
-    # db.session.add(p)
-    # try:
-    #     db.session.commit()
-    # except IntegrityError:
-    #     db.session.rollback()
-    #     raise Conflict(message="sku already exists")
-    # return ProductOut().dump(p), 201

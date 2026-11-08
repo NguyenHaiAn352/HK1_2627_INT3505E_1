@@ -1,5 +1,6 @@
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
+
 class ApiError(Exception):
     """Base — mọi lỗi business kế thừa class này."""
     status_code = 500

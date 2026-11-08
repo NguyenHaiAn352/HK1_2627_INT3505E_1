@@ -1,3 +1,6 @@
 .venv/
 __pycache__/
 HK1_2627_INT3505E_1_Group_6/
+
+.gitignore
+Week 7\product-api\src\product_api\config.py

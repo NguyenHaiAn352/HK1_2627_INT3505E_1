@@ -8,3 +8,5 @@ migrate = Migrate()
 # - nhiều app cùng dùng
 # - test tạo app riêng
 # không leak config
+
+# For managing database connections and migrating between integrations

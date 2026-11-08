@@ -1,0 +1,2 @@
+- finish up lab 1 (container via docker and stuffs, writing test)
+

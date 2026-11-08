@@ -15,8 +15,11 @@ class ProductIn(Schema):
     sku = fields.Str(required=True,
         validate=validate.Length(min=3, max=32))
     name = fields.Str(required=True,
-        validate=validate.Length(min=1, max=255),
-        validate=validate.Range(min=0))
+        validate=[
+            validate.Length(min=1, max=255),
+            validate.Range(min=0)
+        ]
+    )
     qty_in_stock = fields.Int(load_default=0,
         validate=validate.Range(min=0))
 
