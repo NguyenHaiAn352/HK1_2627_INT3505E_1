@@ -1,0 +1,10 @@
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+gunicorn
+marshmallow
+psycopg[binary]
+SQLAlchemy
+
+[test]
+pytest

@@ -19,11 +19,11 @@ class OrderItem(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     order_id: Mapped[int] = mapped_column(
-        ForeignKey('order.id'),
+        ForeignKey('orders.id'),
         nullable=False)
 
     product_id: Mapped[int] = mapped_column(
-        ForeignKey('product.id'),
+        ForeignKey('products.id'),
         nullable=False
     )
 
