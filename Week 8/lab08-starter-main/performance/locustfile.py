@@ -14,11 +14,11 @@ _counter = itertools.count(1)
 class BooksUser(HttpUser):
     wait_time = between(1, 3)
 
-    @task(3)
+    @task(4)
     def list_books(self):
         self.client.get("/books", name="GET /books")
 
-    @task(2)
+    @task(3)
     def read_book(self):
         book_id = random.randint(1, 50)
         with self.client.get(
@@ -30,7 +30,7 @@ class BooksUser(HttpUser):
             else:
                 response.failure(f"Unexpected status {response.status_code}")
 
-    @task(1)
+    @task(2)
     def create_book(self):
         unique = next(_counter)
         self.client.post(
@@ -41,3 +41,11 @@ class BooksUser(HttpUser):
 
     # LAB 4: add search_by_year() and explain any injected failures.
     # A client-side artificial failure is not a real HTTP 500 from the server.
+
+    @task(1)
+    def search_by_year(self):
+        if random.randint(1, 500) <= 5:
+            with self.client.get("/books?year=2020", catch_response=True) as response:
+                response.failure("Simulated 500 error")
+        else:
+            self.client.get("/books?year=2020")

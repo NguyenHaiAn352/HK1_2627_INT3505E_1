@@ -15,12 +15,8 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/books",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "books"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["books"]
             }
           },
           "event": [
@@ -48,12 +44,8 @@
             ],
             "url": {
               "raw": "{{base_url}}/books",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "books"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["books"]
             },
             "body": {
               "mode": "raw",
@@ -86,13 +78,8 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/books/{{book_id}}",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "books",
-                "{{book_id}}"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["books", "{{book_id}}"]
             }
           },
           "event": [
@@ -120,13 +107,8 @@
             ],
             "url": {
               "raw": "{{base_url}}/books/{{book_id}}",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "books",
-                "{{book_id}}"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["books", "{{book_id}}"]
             },
             "body": {
               "mode": "raw",
@@ -158,13 +140,8 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/books/{{book_id}}",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "books",
-                "{{book_id}}"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["books", "{{book_id}}"]
             }
           },
           "event": [
@@ -175,6 +152,68 @@
                 "exec": [
                   "pm.test(\"204 No Content\", () => pm.response.to.have.status(204));",
                   "pm.test(\"empty body\", () => pm.expect(pm.response.text()).to.eql(\"\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /books — create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/books",
+              "host": ["{{base_url}}"],
+              "path": ["books"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"author\": \"Kleppmann\", \"year\": 2017}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"400 status code\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"validation error error code\", () => pm.expect(pm.response.json().code).to.eql(\"VALIDATION_ERROR\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /books/{id} — read book 9999",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/books/{{book_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["books", "{{book_id}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"404 Not Found\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"not found error code\", () => pm.expect(pm.response.json().code).to.eql(\"NOT_FOUND\"));"
                 ]
               }
             }
